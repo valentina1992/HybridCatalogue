@@ -3,19 +3,28 @@
 <div class="container">
    <div class="row">
       <div class="col m3">
+        <!-- Mi stampa l'icona dell'applicazione prendendo storeData
+             che si trova all'interno di appdetails.php
+             nella libreria smarty per prendere i dati uso il $ e indico
+             $smarty->assign('storeData', $stmt->fetch()); il nome della
+             variabile storeData e siccome sono tanti uso una fetch -->
          <a href="{$storeData['iconUrl']}"> <img style="width:150px; margin-top:25px;" src="{$storeData['iconUrl']}"></a>
       </div>
       <div class="col m3">
+        <!-- Mi stampa il nome dell'applicazione prendendo store
+             che si trova all'interno di appdetails.php -->
          <h4 class="media-heading">{$store['name']}</h4>
          <br>
+         <!-- Mi stampa la data dell'applicazione prendendo store
+              che si trova all'interno di appdetails.php -->
          <strong>{$store['createdAt']}</strong></br></br>
+
          <!-- Questo controllo inizia qui
               Serve per far vedere all'utente o sviluppatore
               l'immagine in cui è supportata l'applicazione
               se iosURL, o windowsURL sono stati inseriti nei
               campi di inserimento allora appare l'immagine
-              altrimenti no
-         -->
+              altrimenti no -->
          {if $store['androidUrl'] != ''}
          <a href="{$store['androidUrl']}" target="_blank"><img src="images/android.png"></a>
          {/if}
@@ -27,6 +36,10 @@
          {/if}
          <!-- e finisce qui -->
       </div>
+
+      <!-- Questo controllo vede se l'utente quando ha inserito
+           l'applicazione ha messo qualche informazione sullo sviluppatore
+           se il campo è vuoto non visualizzo nulla -->
       <div class="col m4"><br>
         {if $store['submitterWebSite'] != ''}
         <strong>Sviluppatore</strong><br>

@@ -1,11 +1,28 @@
 <?php
+/*
+** session_start () crea una sessione
+** o riprende quello attuale sulla base di un identificatore
+** di sessione passata attraverso una richiesta GET o POST
+*/
 session_start();
+
+/*
+** sto includendo il file app.php con la posizione per fare la connessione
+** al database, senza non avrò nulla
+*
+** includiamo anche il file googlePlay che è quello in cui andiamo a prendere
+** i dati da googlePlay con web scraping
+*/
 require_once 'include/googlePlay.php';
 require_once 'include/app.php';
 require_once 'smarty/libs/Smarty.class.php';
 
 $insertError = null;
 
+/*
+** Vanno dichiarate sempre all'inizio di un file
+** per far capire che stiamo utilizzando un libreria smarty
+*/
 $smarty = new Smarty();
 $smarty->setCompileDir('smarty/application/templates_c');
 $smarty->setCacheDir('smarty/application/cache');
@@ -78,19 +95,20 @@ if(isset($_POST['fetchFromStore']) && $_POST['fetchFromStore'] == 1)
 				$smarty->display('smarty/application/templates/main_content/submit.tpl');
 				exit(0);
 			}
+
+			/*
+			** si ottengono i dati con la get nel file googlePlay dichiarati
+			*/
 			$smarty->assign('appId',$_POST['id']);
 			$smarty->assign('appName',$googlePlay->getName());
 			$smarty->assign('appDescription',$googlePlay->getOneLiner());
 			$smarty->assign('appSeller',$googlePlay->getSeller());
-
 			$smarty->assign('appImage',$googlePlay->getImage());
 			$smarty->assign('appScreenshot',$googlePlay->getScreenshots());
 			$smarty->assign('appCategory',$googlePlay->getCategory());
 			$smarty->assign('appVersion',$googlePlay->getVersion());
 			$smarty->assign('appCreatedAt',$googlePlay->getCreatedAt());
-
 			$smarty->assign('androidUrl',$googlePlay->getandroidUrl());
-
 			$smarty->assign('appSize',$googlePlay->getSize());
 			$smarty->assign('appRating',$googlePlay->getRating());
 			$smarty->assign('appPlatformVersion', $googlePlay->getPlatformVersion());
@@ -102,6 +120,9 @@ if(isset($_POST['fetchFromStore']) && $_POST['fetchFromStore'] == 1)
 			$insertError = 'Properly inserted fields';
 			$smarty->assign('insertError',$insertError);
 
+			/*
+			** Per indicare a quale pagina HTML dobbiamo visualizzare
+			*/
 			$smarty->display('smarty/application/templates/main_content/submit.tpl');
 			exit(0);
 	}
@@ -118,8 +139,19 @@ if(isset($_POST['fetchFromStore']) && $_POST['fetchFromStore'] == 1)
 			continue;
 
 		$insertError = "Fill in the required fields";
+
+		/*
+		** assign è libreria smarty e per assegnare la variabile che andremo a prendere dalla
+		** pagina HTML, in questo caso è l'errore
+		*/
 		$smarty->assign('insertError',$insertError);
+		/*
+		** Per indicare a quale pagina HTML dobbiamo visualizzare
+		*/
 		$smarty->display('smarty/application/templates/main_content/submit.tpl');
+		/*
+		** Uscita forzata
+		*/
 		exit(0);
 	}
 
@@ -160,7 +192,13 @@ $_app->windowsUrl = $_POST['windowsUrl'];
 	{
 		$insertError = "iosUrl indirizzo errato o non raggiungibile!";
 		$smarty->assign('insertError',$insertError);
+		/*
+		** Per indicare a quale pagina HTML dobbiamo visualizzare
+		*/
 		$smarty->display('smarty/application/templates/main_content/submit.tpl');
+		/*
+		** Uscita forzata
+		*/
 		exit(0);
 	}
 
@@ -168,7 +206,13 @@ $_app->windowsUrl = $_POST['windowsUrl'];
 	{
 		$insertError = "androidUrl indirizzo errato o non raggiungibile!";
 		$smarty->assign('insertError',$insertError);
+		/*
+		** Per indicare a quale pagina HTML dobbiamo visualizzare
+		*/
 		$smarty->display('smarty/application/templates/main_content/submit.tpl');
+		/*
+		** Uscita forzata
+		*/
 		exit(0);
 	}
 
@@ -176,7 +220,13 @@ $_app->windowsUrl = $_POST['windowsUrl'];
 	{
 		$insertError = "windowsUrl indirizzo errato o non raggiungibile!";
 		$smarty->assign('insertError',$insertError);
+		/*
+		** Per indicare a quale pagina HTML dobbiamo visualizzare
+		*/
 		$smarty->display('smarty/application/templates/main_content/submit.tpl');
+		/*
+		** Uscita forzata
+		*/
 		exit(0);
 	}
 
@@ -189,8 +239,17 @@ $_app->windowsUrl = $_POST['windowsUrl'];
 	$insertError = "App inserita correttamente";
 	$smarty->assign('insertError',$insertError);
 
+	/*
+	** Per indicare a quale pagina HTML dobbiamo visualizzare
+	*/
 	$smarty->display('smarty/application/templates/main_content/submit.tpl');
+	/*
+	** Uscita forzata
+	*/
 	exit(0);
 }
 
+/*
+** Per indicare a quale pagina HTML dobbiamo visualizzare
+*/
 $smarty->display('smarty/application/templates/main_content/submit.tpl');

@@ -4,12 +4,13 @@
 
 <div class="container">
 	<div class="row">
-        <div class="col s12 m7">
-            <div class="card-image">
-              <img src="" style="width:50px; height:50px; margin-top:10px;">
-            </div>
- 		</div>
+      <div class="col s12 m7">
+	        <div class="card-image">
+	          <img src="" style="width:50px; height:50px; margin-top:10px;">
+	        </div>
+ 			</div>
  	</div>
+	
  	<center><h2><p style="color:red" class="flow-text">About Us</p></h2></center>
 
     <div class="row">

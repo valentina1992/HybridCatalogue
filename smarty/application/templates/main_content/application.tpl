@@ -1,5 +1,9 @@
 {extends file="smarty/application/templates/base.tpl"}
 {block name=body}
+
+<!-- Questo controllo è di ricerca, con value="search" vado nel file apps.php
+     esiste un controllo se è stato inserito un nome allora fa una ricerca,
+     se non è stato inserito nulla restituisce un errore -->
 <div class="container">
   <div class="row">
     <div class="col s12 m12">
@@ -20,6 +24,10 @@
 
 <div class="container">
   <div class="row">
+    <!-- Questo foreach from=$app mi indica il nome che è stato messo nel file app.php
+         invece item=application è il nome che andremo a mettere per far stampare le
+         variabili
+         Deve essere aperto è chiuso alla fine-->
     {foreach from=$app item=application}
       <div class="col s12 m3">
         <div class="card">
