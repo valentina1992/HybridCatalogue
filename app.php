@@ -12,8 +12,17 @@ include 'gestione_errori.php';
 
 $db = Database::getInstance();
 
-
-$stmt = $db->query('SELECT a.* , s.iconUrl from App AS a LEFT JOIN StoreAppData AS s ON a.idApp = s.idStoreAppData ORDER BY a.createdAt');
+/*
+** in questa query faccio un integrazione tra tabelle App e StoreAppData
+** facendo riferimento all'id chiave primaria ordinato in base alla data 'createdAt'
+*/
+$stmt = $db->query('SELECT a.* , s.iconUrl
+                    from App
+                    AS a
+                    LEFT JOIN StoreAppData
+                    AS s
+                    ON a.idApp = s.idStoreAppData
+                    ORDER BY a.createdAt');
 $smarty->assign('app', $stmt->fetchAll());
 
 $smarty->display('smarty/application/templates/main_content/application.tpl');

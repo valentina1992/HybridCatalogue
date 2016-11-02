@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-10-27 18:40:14
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-11-02 01:03:21
          compiled from "smarty/application/templates/main_content/about.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:56094140858122deead8875-47738852%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '84e48659002e8daebdd53c08e41925c1b75f7687' => 
     array (
       0 => 'smarty/application/templates/main_content/about.tpl',
-      1 => 1473327746,
+      1 => 1478035803,
       2 => 'file',
     ),
     '401f360fb2eb1f6b55783b21966b5b7bf23bdebf' => 
     array (
       0 => 'smarty/application/templates/base.tpl',
-      1 => 1476134062,
+      1 => 1478037551,
       2 => 'file',
     ),
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
-  'has_nocache_code' => false,
   'version' => 'Smarty-3.1.21-dev',
   'unifunc' => 'content_58122deeb32ff2_78200722',
+  'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_58122deeb32ff2_78200722')) {function content_58122deeb32ff2_78200722($_smarty_tpl) {?><!DOCTYPE html>
 <html lang="en">
@@ -62,9 +62,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-
-<!--onload='document.form1.ValidateEmail.focus()'-->
-
 
 
 
@@ -181,11 +178,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	</div>
 </div>
 </div>
-<!--By utilizing elements and principles of Material Design, we were able
-	to create a framework that incorporates components and animations that provide
-	more feedback to users. Additionally, a single underlying
-	responsive system across all platforms allow for a more unified user experience.-->
-
 
 
 
@@ -201,8 +193,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <?php echo '<script'; ?>
  src="https://code.jquery.com/jquery-2.1.1.min.js"><?php echo '</script'; ?>
 >
-
-
 <?php echo '<script'; ?>
  type="text/javascript" src="materialize/js/materialize.js"><?php echo '</script'; ?>
 >

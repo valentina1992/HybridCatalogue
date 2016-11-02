@@ -9,4 +9,8 @@ $smarty = new Smarty;
 $smarty->setCompileDir('smarty/application/templates_c');
 $smarty->setCacheDir('smarty/application/cache');
 
+/*
+** Pagina di consultazione TEAM 
+*/
+
 $smarty->display('smarty/application/templates/main_content/about.tpl');

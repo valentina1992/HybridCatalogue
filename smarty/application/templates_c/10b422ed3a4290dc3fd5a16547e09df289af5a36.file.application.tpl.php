@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-10-12 15:30:57
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-11-02 01:03:22
          compiled from "smarty/application/templates/main_content/application.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:167790545557ef89ccb415e9-12789413%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '10b422ed3a4290dc3fd5a16547e09df289af5a36' => 
     array (
       0 => 'smarty/application/templates/main_content/application.tpl',
-      1 => 1475329385,
+      1 => 1478036025,
       2 => 'file',
     ),
     '401f360fb2eb1f6b55783b21966b5b7bf23bdebf' => 
     array (
       0 => 'smarty/application/templates/base.tpl',
-      1 => 1476134062,
+      1 => 1478037551,
       2 => 'file',
     ),
   ),
@@ -62,9 +62,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-
-<!--onload='document.form1.ValidateEmail.focus()'-->
-
 
 
 
@@ -135,10 +132,6 @@ $_smarty_tpl->tpl_vars['application']->_loop = true;
             <p class="buttonView"><a class="waves-effect waves-light btn" href="app_details.php?id=<?php echo $_smarty_tpl->tpl_vars['application']->value['idApp'];?>
 ">View</a></p>
           </div>
-        <!--   <div class="col s12 m2">
-            <img class="screen" src="<?php echo $_smarty_tpl->tpl_vars['application']->value['image'];?>
-">
-          </div> -->
         </div>
       </div>
 
@@ -161,8 +154,6 @@ $_smarty_tpl->tpl_vars['application']->_loop = true;
 <?php echo '<script'; ?>
  src="https://code.jquery.com/jquery-2.1.1.min.js"><?php echo '</script'; ?>
 >
-
-
 <?php echo '<script'; ?>
  type="text/javascript" src="materialize/js/materialize.js"><?php echo '</script'; ?>
 >

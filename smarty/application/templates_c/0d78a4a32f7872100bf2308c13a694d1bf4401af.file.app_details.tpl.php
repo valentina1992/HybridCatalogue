@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-10-13 10:23:25
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-11-02 12:50:59
          compiled from "smarty/application/templates/main_content/app_details.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:97100903157ef84f3d3aa53-59947165%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0d78a4a32f7872100bf2308c13a694d1bf4401af' => 
     array (
       0 => 'smarty/application/templates/main_content/app_details.tpl',
-      1 => 1476347004,
+      1 => 1478036011,
       2 => 'file',
     ),
     '401f360fb2eb1f6b55783b21966b5b7bf23bdebf' => 
     array (
       0 => 'smarty/application/templates/base.tpl',
-      1 => 1476134062,
+      1 => 1478037551,
       2 => 'file',
     ),
   ),
@@ -63,9 +63,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     </div>
   </nav>
 
-<!--onload='document.form1.ValidateEmail.focus()'-->
-
-
 
 
 
@@ -82,6 +79,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
          <br>
          <strong><?php echo $_smarty_tpl->tpl_vars['store']->value['createdAt'];?>
 </strong></br></br>
+         <!-- Questo controllo inizia qui
+              Serve per far vedere all'utente o sviluppatore
+              l'immagine in cui è supportata l'applicazione
+              se iosURL, o windowsURL sono stati inseriti nei
+              campi di inserimento allora appare l'immagine
+              altrimenti no
+         -->
          <?php if ($_smarty_tpl->tpl_vars['store']->value['androidUrl']!='') {?>
          <a href="<?php echo $_smarty_tpl->tpl_vars['store']->value['androidUrl'];?>
 " target="_blank"><img src="images/android.png"></a>
@@ -94,6 +98,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
          <a href="<?php echo $_smarty_tpl->tpl_vars['store']->value['windowsUrl'];?>
 " target="_blank"><img src="images/windows.png"></a>
          <?php }?>
+         <!-- e finisce qui -->
       </div>
       <div class="col m4"><br>
         <?php if ($_smarty_tpl->tpl_vars['store']->value['submitterWebSite']!='') {?>
@@ -115,6 +120,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
          <h4>Screenshot:</h4>
       </div>
       <div class="carousel">
+        <!-- Questo è un ciclo , dato che ci sono molte
+             immagini di screenshot, esso me le fa vedere
+             tutte
+        -->
          <?php  $_smarty_tpl->tpl_vars['screenshot'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['screenshot']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['screenshots']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['screenshot']->key => $_smarty_tpl->tpl_vars['screenshot']->value) {
@@ -127,17 +136,6 @@ $_smarty_tpl->tpl_vars['screenshot']->_loop = true;
          </a>
          <?php } ?>
       </div>
-      <!-- <?php  $_smarty_tpl->tpl_vars['screenshot'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['screenshot']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['screenshots']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['screenshot']->key => $_smarty_tpl->tpl_vars['screenshot']->value) {
-$_smarty_tpl->tpl_vars['screenshot']->_loop = true;
-?>
-         <a href="<?php echo $_smarty_tpl->tpl_vars['screenshot']->value['url'];?>
-" target="_blank">
-         <img class="screen" src="<?php echo $_smarty_tpl->tpl_vars['screenshot']->value['url'];?>
-">
-         </a>
-         <?php } ?> -->
    </div>
    <div class="col m12">
       <h5>The app is compatible with some of your devices:</h5>
@@ -203,7 +201,6 @@ $_smarty_tpl->tpl_vars['screenshot']->_loop = true;
          </div>
       </div>
    </div>
-   <!--<div class="content" itemprop="softwareVersion">(.+?)<\/div> VERSIONE-->
 </div>
 
 
@@ -219,8 +216,6 @@ $_smarty_tpl->tpl_vars['screenshot']->_loop = true;
 <?php echo '<script'; ?>
  src="https://code.jquery.com/jquery-2.1.1.min.js"><?php echo '</script'; ?>
 >
-
-
 <?php echo '<script'; ?>
  type="text/javascript" src="materialize/js/materialize.js"><?php echo '</script'; ?>
 >

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-10-13 10:03:46
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-11-02 15:31:16
          compiled from "smarty/application/templates/main_content/submit.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:15657848357ef7e45e892d4-29879147%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c6c41236e3a42ed7b66a37b21a1888ace684ac64' => 
     array (
       0 => 'smarty/application/templates/main_content/submit.tpl',
-      1 => 1476345821,
+      1 => 1478096954,
       2 => 'file',
     ),
     '401f360fb2eb1f6b55783b21966b5b7bf23bdebf' => 
     array (
       0 => 'smarty/application/templates/base.tpl',
-      1 => 1476134062,
+      1 => 1478037551,
       2 => 'file',
     ),
   ),
@@ -63,12 +63,17 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     </div>
   </nav>
 
-<!--onload='document.form1.ValidateEmail.focus()'-->
 
 
 
 
-
+<!--
+    Dato che nel file submit.php è stata scritta la funzione
+    $mandatoryFields che serve a controllare se i campi sono scritti
+    oppure no, questa funzione javascript mi permette di premere il bottone
+    fetchFromStore anche senza aver inserito quei campi necessari,
+    disabiliteremo per un secondo quel controllo $mandatoryFields
+-->
 <?php echo '<script'; ?>
 >
    function disabledRequired()
@@ -87,6 +92,10 @@ $_smarty_tpl->tpl_vars['entry']->_loop = true;
 
 <?php echo '</script'; ?>
 >
+
+<!--
+  Se l'id non è valido mi manderà un messaggio di errore
+-->
 <div class="container">
    <div class="row">
       <?php if (isset($_smarty_tpl->tpl_vars['insertError']->value)) {?>
@@ -99,6 +108,7 @@ $_smarty_tpl->tpl_vars['entry']->_loop = true;
       </div>
       <?php }?>
    </div>
+
    <div class="row">
       <form class="col s12 m12" name="form1" class="form-horizontal" action="submit.php" method="POST">
          <div class="row">
@@ -111,6 +121,9 @@ $_smarty_tpl->tpl_vars['entry']->_loop = true;
             </div>
             <div class="input-field col s12">
                <center>
+                   <!--
+                     Qui è scritta la funzione di javascript onClick
+                   -->
                   <button type="submit" onclick="disabledRequired();" class="waves-effect waves-light btn" name="fetchFromStore" value="1">
                   Fetch From Store</button>
                </center>
@@ -248,25 +261,7 @@ $_smarty_tpl->tpl_vars['screenshot']->_loop = true;
                </label>
             </div>
          </div>
-         <!-- <div class="row">
-            <div class="input-field col s12">
-              <div data-success="right">
-                <a class="tooltipped" data-delay="50" data-tooltip="iosUrl">iosUrl</a>
-              </div>
-               <select  name="iosUrl" style="display:block" >
-                  <option value="">--- Seleziona una app per ios ---</option>
-                  <?php  $_smarty_tpl->tpl_vars['url'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['url']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['iosUrl']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['url']->key => $_smarty_tpl->tpl_vars['url']->value) {
-$_smarty_tpl->tpl_vars['url']->_loop = true;
-?>
-                  <option value="<?php echo $_smarty_tpl->tpl_vars['url']->value;?>
-"><?php echo $_smarty_tpl->tpl_vars['url']->value;?>
-</option>
-                  <?php } ?>
-               </select>
-            </div>
-         </div> -->
+
          <div class="row">
             <div class="input-field col s12">
                <input type="text" class="validate" name="reviewsCount" placeholder="reviewsCount" value="<?php echo $_smarty_tpl->tpl_vars['appReviewsCount']->value;?>
@@ -339,15 +334,16 @@ $_smarty_tpl->tpl_vars['url']->_loop = true;
          </div>
 
          <center>
+             <!--
+               Inserisce l'app nel database
+             -->
             <button type="submit" name="insert" value="1" class="waves-effect waves-light btn">
             Insert to App</button>
          </center>
       </form>
    </div>
 </div>
-<!-- onclick="ValidateEmail(document.form1.sourceCodeUrl)"
-   //onclick="ValidateEmail(document.form1.submitterEmail)"
-   -->
+
 
 
 <footer class="page-footer">
@@ -362,8 +358,6 @@ $_smarty_tpl->tpl_vars['url']->_loop = true;
 <?php echo '<script'; ?>
  src="https://code.jquery.com/jquery-2.1.1.min.js"><?php echo '</script'; ?>
 >
-
-
 <?php echo '<script'; ?>
  type="text/javascript" src="materialize/js/materialize.js"><?php echo '</script'; ?>
 >

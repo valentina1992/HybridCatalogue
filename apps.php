@@ -13,16 +13,22 @@ $smarty->setCacheDir('smarty/application/cache');
 include 'gestione_errori.php';
 
 /*
-** Funzione di ricerca, controlla se nella tabella app esiste il nome scritto
-		nel campo ricerca
+** Questa condizione serve a far capire se nel campo ricerca
+** è stato scritto qualcosa che esiste nel Database
 */
 $searchString = '%';
-
 if(isset($_REQUEST['search']) && strlen($_REQUEST['search']) > 0)
 	$searchString .= $_REQUEST['search'] . '%';
 
+/*
+** Connessione al database
+*/
 $db = Database::getInstance();
 
+/*
+** Funzione di ricerca, in questa query controlla se nella tabella App
+** esiste il nome scritto nel campo ricerca
+*/
 $stmt = $db->prepare('SELECT a.* , s.iconUrl
 											from App AS a
 											LEFT JOIN StoreAppData
@@ -31,8 +37,9 @@ $stmt = $db->prepare('SELECT a.* , s.iconUrl
 
 $stmt->bindValue(':search', $searchString);
 $stmt->execute();
-
 $result = $stmt->fetchAll();
+
+
 if($result == NULL || count($result) == 0)
 {
 	$param = '';
@@ -51,5 +58,4 @@ if($result == NULL || count($result) == 0)
 
 $smarty->assign('search',$result);
 
-//va sempre alla fine
 $smarty->display('smarty/application/templates/main_content/search.tpl');

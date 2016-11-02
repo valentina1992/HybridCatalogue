@@ -17,6 +17,13 @@
                 <a href="app_details.php?id={$result['idApp']}">{$result['name']}</a>
               </h4>
               <div class="icon">
+                <!-- Questo controllo inizia qui
+                     Serve per far vedere all'utente o sviluppatore
+                     l'immagine in cui è supportata l'applicazione
+                     se iosURL, o windowsURL sono stati inseriti nei
+                     campi di inserimento allora appare l'immagine
+                     altrimenti no
+                -->
                 {if $result['androidUrl'] != ''}
                 <a href="{$result['androidUrl']}" target="_blank"><img src="images/android.png"></a>
                 {/if}

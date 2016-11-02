@@ -17,7 +17,9 @@
 <body>
   <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="index.php" class="brand-logo left">Logo</a>
+      <a id="logo-container" href="index.php" class="brand-logo left">
+          <a href="images/logo.jpg"><img src="images/logo.jpg" style="width: 114px; &quot;"></a> 
+      </a>
         <ul class="right hide-on-med-and-down">
           <li><a href="app.php">App</a></li>
           <li><a href="about.php">About Us</a></li>
@@ -50,8 +52,6 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-
-
 <script type="text/javascript" src="materialize/js/materialize.js"></script>
 <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="materialize/js/init.js"></script>

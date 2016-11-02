@@ -1,8 +1,9 @@
 <?php
 
-/**
- *
- */
+/*
+** dichiaro tutti i parametri che mi servono
+** compreso lo screenshots che è un array
+*/
 class googlePlayParser {
     private $url = '';
     private $data = NULL;
@@ -26,17 +27,27 @@ class googlePlayParser {
     private $androidUrl = '';
     private $windowsUrl = '';
 
-    /* controllo se l'url è scritto correttamente
-    ** contenente i seguenti caratteri &, id, =, ecc..
+    /* Filtra ID verificando che sia un formato ID valido
+    ** strpos è restituisce la posizione numerica della prima occorrenza
+    ** in questo caso nell'URL deve cercare i caratteri : &, =, ?
+    ** Se non viene trovata alcuna occorrenza strpos restituirà FALSE
+    ** nel nostro caso un Errore di URL non corretto
     */
 
     public static function extractID($url){
         $pos = 0;
         if (($pos = strpos($url, 'id=')) === FALSE) {
           if (strpos($url, '&') || strpos($url, '=') || strpos($url, '?'))
-                throw new Exception("Url non corretto, poichè non contiene nessun id");
+                throw new Exception("Url incorrect, as it contains no id");
             return $url;
         }
+        /*
+        ** explode ha il compito di suddividere una stringa
+        ** sulla base di un dato separatore;
+
+        ** substr restituisce una parte di una stringa
+        ** che sia prima del carattere '&', o 'id' o '='
+        */
 
         $url    = substr($url, $pos);
         $params = explode('&', $url);
@@ -49,22 +60,26 @@ class googlePlayParser {
         throw new Exception("No ID found");
     }
 
-    public function getOrigin()
-    {
+    public function getOrigin(){
         return $this->url;
     }
 
-    /* Questa funzione vede la
-    ** versione della nostra applicazione
+    /*
+    ** Questa funzione vede la versione della nostra applicazione
+    ** e trim rimuove lo spazio presente
     */
-    public function checkVersion($version)
-    {
+    public function checkVersion($version){
         return trim($version) == $this->version;
     }
 
 
-    /* Funzione che estrae l'id dalla funzione getID scritta dopo e
-    ** con l'url di google play vede se esiste l'applicazione
+    /*
+    ** Funzione che estrae l'id dal paramentro $id,
+    ** con l'url di google play controlla se esiste l'applicazione
+    ** oppure no
+    **
+    ** file_get_contents legge il contenuto di un file e lo restituisce sotto forma di stringa
+    ** se non ha trovato nulla restituisce FALSE
     */
     function __construct($id) {
         $this->id   = googlePlayParser::extractID($id);
@@ -74,7 +89,11 @@ class googlePlayParser {
         if ($this->data === FALSE)
             throw new Exception("App not found");
 
-        /* 2] parse data */
+        /*
+        ** La pseudo-variabile $this è disponibile
+        ** quando un metodo è invocato dall'interno del contesto di un oggetto
+        ** andremo ad invocare questi metodi successivamente
+        */
         $this->fetchName();
         $this->fetchImage();
         $this->fetchWebSite();
@@ -92,14 +111,15 @@ class googlePlayParser {
         $this->fetchSeller();
     }
 
-    public function getID()
-    {
+    public function getID(){
         return $this->id;
     }
 
-
-    /* Mi prende la data in formato
-    ** inglese
+    /*
+    ** englishToIsoDate mi restituirà la data in
+    ** formato inglese, scrivendo tutti i mesi come un
+    ** array e con la funzione explode ha il compito di
+    ** suddividere una stringa sulla base di un dato separatore;
     */
     public static function englishToIsoDate($dateString){
         $lookup = array(
@@ -117,14 +137,13 @@ class googlePlayParser {
             'december' => 12
         );
         $pieces = explode(' ', str_replace(',', ' ', $dateString));
-        //print_r($pieces);
-
         $date = $pieces[3] . '-' . str_pad($lookup[strtolower($pieces[0])], 2, '0', STR_PAD_LEFT) . '-' . str_pad($pieces[1], 2, '0', STR_PAD_LEFT);
         return $date;
     }
 
-    /* Mi prende la data in formato
-    ** Italiana
+    /*
+    ** italianToIsoDate mi restituirà la data
+    ** in formato italiana
     */
     public static function italianToIsoDate($dateString)
     {
@@ -146,16 +165,25 @@ class googlePlayParser {
         $date = $pieces[2] . '-' . str_pad($lookup[strtolower($pieces[1])], 2, '0', STR_PAD_LEFT) . '-' . str_pad($pieces[0], 2, '0', STR_PAD_LEFT);
         return $date;
     }
+    /*FINE DATA FORMAT*/
 
-    /* Questa mette alle immagini che non esistono
-    ** http per farle vedere nel nostro portale web
+
+    /*
+    ** Questa funzione controlla se in un url
+    ** esiste un http allora mi restituisce $_url scritto correttamente
+    ** altrimenti aggiunge http + $_url
     */
-    private static function purifyUrl($_url)
-    {
+    private static function purifyUrl($_url){
         if (strrpos($_url, 'http', -strlen($_url)) == true)
             return 'http:' . $_url;
         return $_url;
     }
+
+    /*
+    ** Inziano le funzioni
+    ** get usato per ottenere dei dati
+    ** set usato per impostare dei dati.
+    */
     public function getSeller()
     {
         return $this->seller;
@@ -283,8 +311,6 @@ class googlePlayParser {
         return $this->version;
     }
 
-
-
     public function setDescription($description)
     {
         $this->description = $description;
@@ -345,7 +371,15 @@ class googlePlayParser {
         return $this->platformVersion;
     }
 
+    /*
+    ** Fine funzioni get e set
+    */
 
+    /*
+    ** Inizio dell'invocazione del metodo scritto
+    ** precedentemente con il codece HTML che prende i nostri
+    ** dati formattato tramite REGEX101
+    */
     protected function fetchName(){
         $result = array();
         preg_match_all('/<div class="id-app-title" tabindex="0">(.+?)<\/div>/', $this->data, $result);
@@ -387,21 +421,6 @@ class googlePlayParser {
         preg_match_all('/<img class="cover-image"+.?src="(.+?)".+?>/', $this->data, $result);
         $this->iconUrl = self::purifyUrl($result[1][0]);
     }
-
-    /*protected function fetchTechnicalNotes () {
-    $result = array();
-
-    preg_match_all('/<div class="show-more-content text-body" itemprop="description"[^>]*>(.+?)<\/div>/', $this->data, $result);
-
-
-    $pos=strpos($result[1][0], '>');
-
-    if($pos === false){
-    $this->technicalNotes = $result[1][0];
-    }else{
-    $this->technicalNotes = substr($result[1][0], $pos+1);
-    }
-    }*/
 
     protected function fecthCreatedAt()
     {

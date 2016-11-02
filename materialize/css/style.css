@@ -45,7 +45,6 @@
 .circle{
   border-radius: 30% !important;
   padding: 6px 16px 6px 14px;
-  /*max-height: 180px !important;*/
 }
 .icon{
   text-align: center;
@@ -74,5 +73,4 @@
 .slider .indicators {
   bottom: 60px;
   z-index: 100;
-  /* text-align: left; */
 }

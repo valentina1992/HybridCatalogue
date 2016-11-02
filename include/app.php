@@ -5,11 +5,12 @@ ini_set("display_errors", 1);
 class Utils
 {
 
-	/* Controlla se l'url di google play, ios e windows sono
-	** corretti
+	/*
+	** Controlla se l'url di google play, ios e windows sono
+	** corretti con una funzione di PHP 'validate_url'
 	*/
-	public static function checkUrl($_url)
-	{
+
+	public static function checkUrl($_url){
 		if($_url == NULL || $_url == '')
 			return TRUE;
 
@@ -29,8 +30,13 @@ class Utils
 	}
 }
 
-class App
-{
+class App {
+
+	/*
+	** Questi sono i dati che servono per far visualizzare
+	** la nostra applicazione e prenderci i dati con Web Scraping
+	** tutti inizializzati a NULL o stringhe vuote
+	*/
 
 	public $data = NULL;
 	public $id = NULL;
@@ -51,7 +57,6 @@ class App
 	public $iosUrl = '';
 	public $androidUrl = '';
 	public $windowsUrl = '';
-
 	public $sourceCodeUrl = '';
 	public $submitterName = '';
 	public $submitterWebSite = '';
@@ -61,13 +66,12 @@ class App
 
 }
 
-class Store
-
-	{
-	}
+class Store{}
 
 	/*
-	** Connessione al database
+	** Inizio Connessione al database con i seguenti paramentri
+	** del db: con username, password, nome del db e la porta di
+	** apache se è necessario, altrimenti potrebbe anche essere eliminata
 	*/
 class Database {
 	public static $dsn = 'mysql:host=localhost;dbname=mydb;port=8889';
@@ -94,33 +98,26 @@ class Database {
 		return self::$db;
 	}
 }
+/*
+** Fine Connessione al database
+*/
 
-class AppManager
-
-	{
-	public static
-
-	function Store(App $_app)
-		{
+/*
+** Controlla se nello StoreAppData esiste un'applicazione
+** con la versione vecchia e la aggiorna a quella corrente
+*/
+class AppManager {
+	public static function Store(App $_app) {
 		$db = Database::getInstance();
 		$db->beginTransaction();
-
-		try
-			{
-			$stores = AppManager::getStore('%google%');
-
-			if (count($stores) != 1)
-				throw new Exception("Attenzione stores multipli o nessuno Store");
-
-			$storeId = $stores[0]->idStore;
-
-			if (AppManager::AppExitsByStoreId($_app->id , $_app->version))
-			{
+		try {
+			if (AppManager::AppExitsByStoreId($_app->id , $_app->version)) {
 				return false;
 			}
 
-			// Inserisce l'app
-
+			/*
+			** Inserisce l'applicazione nel database nella tabella APP
+			*/
 			$stmt = $db->prepare('INSERT INTO App
 													 (name,
 														oneLiner,
@@ -162,7 +159,6 @@ class AppManager
 			$stmt->bindValue(':submitterEmail', $_app->submitterEmail, PDO::PARAM_STR);
 			$stmt->bindValue(':isSubmitterDeveloper', $_app->isSubmitterDeveloper, PDO::PARAM_STR);
 			$stmt->bindValue(':technicalNotes', $_app->technicalNotes, PDO::PARAM_STR);
-
 			$stmt->bindValue(':category', $_app->category , PDO::PARAM_STR);
 			$stmt->bindValue(':iosUrl', $_app->iosUrl , PDO::PARAM_STR);
 			$stmt->bindValue(':androidUrl', $_app->androidUrl , PDO::PARAM_STR);
@@ -171,8 +167,9 @@ class AppManager
 			$stmt->execute();
 			$appId = $db->lastInsertId();
 
-			// Inserisci screenshot
-
+			/*
+			** Inserisce le immagini nel database nella tabella SCREENSHOT
+			*/
 			$stmt = $db->prepare('INSERT INTO `Screenshot` (`App_idApp`,`url` ) VALUES(:id, :url)');
 			foreach($_app->screenshots as $url)
 				{
@@ -181,8 +178,10 @@ class AppManager
 				$stmt->execute();
 				}
 
-			// inserisce nella tabella StoreAppData
-
+			/*
+			** Inserisce i dati o le informazioni nel database
+			** nella tabella StoreAppData
+			*/
 			$stmt = $db->prepare('INSERT INTO `StoreAppData`
 													(`idPlayStore`,
 													`description`,
@@ -230,10 +229,7 @@ class AppManager
 	/**
 	 *  Questa funzione vede se l'applicazione esiste nel db tramite l'id chiave primaria
 	 */
-	public static
-
-	function AppExitsById($_id)
-		{
+	public static function AppExitsById($_id) {
 		$db = Database::getInstance();
 		$stmt = $db->prepare('SELECT * FROM App WHERE idApp = :id');
 		$stmt->bindValue(':id', $_id, PDO::PARAM_STR);
@@ -241,48 +237,40 @@ class AppManager
 		$data = $stmt->fetchAll();
 		if (count($data) > 0) return true;
 		return false;
-		}
+	}
 
 	/*
-	* Controlla se esiste un applicazione con store id $_id e versione $_version.
-	Se $_version è impostato su null allora Controlla se esiste almeno un occorrenza nel db.
+	** Controlla se esiste un applicazione con store id $_id e versione $_version.
 	*/
-	public static
-
-	function AppExitsByStoreId($_id, $_version = NULL)
-		{
+	public static function AppExitsByStoreId($_id, $_version = NULL) {
 		$db = Database::getInstance();
+
+		/*
+		** Questa funzione vede se l'applicazione esiste nel db tramite l'id chiave primaria
+		*/
 		$stmt = $db->prepare('SELECT * FROM StoreAppData WHERE idPlayStore = :id');
 		$stmt->bindValue(':id', $_id, PDO::PARAM_STR);
 		$stmt->execute();
 		$data = $stmt->fetchAll(PDO::FETCH_CLASS, App::class);
 
-		if ($_version !== NULL)
-			{
-			foreach($data as $app)
-				{
-				if (trim($_version) == $app->version)
-					{
+		/*
+		** Se $_version è impostato su null allora Controlla se esiste almeno un occorrenza nel db.
+		** con foreach scorre tante volte quante ne esistono di occorrenze
+		** trim è una funzione di php che rimuove gli spazi
+		*/
+		if ($_version !== NULL) {
+			foreach($data as $app) {
+				if (trim($_version) == $app->version) {
 					return true;
-					}
 				}
-
-			return false;
 			}
-
+			return false;
+		}
+		/*
+		** Se in $data è stato trovato qualcosa, quindi se è
+		** > 0 allora return true altrimenti false
+		*/
 		if (count($data) > 0) return true;
 		return false;
-		}
-
-	public static
-
-	function getStore($_match)
-		{
-		$db = Database::getInstance();
-		$stmt = $db->prepare('SELECT * FROM Store WHERE url LIKE :match');
-		$stmt->bindValue(':match', $_match, PDO::PARAM_STR);
-		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_CLASS, Store::class);
-
-		}
 	}
+}

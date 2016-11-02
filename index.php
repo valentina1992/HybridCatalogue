@@ -13,18 +13,22 @@ require_once 'gestione_errori.php';
 
 $db = Database::getInstance();
 
-$stmt = $db->query('SELECT a.*, s.iconUrl as thumb FROM App  as a LEFT JOIN StoreAppData as s ON a.idApp = s.App_idApp ORDER BY a.`createdAt`');
+$stmt = $db->query('SELECT a.*, s.iconUrl
+                    as thumb
+                    FROM App
+                    as a LEFT JOIN StoreAppData
+                    as s ON a.idApp = s.App_idApp
+                    ORDER BY a.`createdAt`');
 $smarty->assign('app',$stmt->fetchAll());
 
-$stmt = $db->query('SELECT * FROM `App` WHERE staffPick>0 ORDER BY `createdAt` desc LIMIT 3');
-$smarty->assign('appPick',$stmt->fetchAll());
-
-$stmt = $db->query('SELECT * FROM `Store`');
-$smarty->assign('store',$stmt->fetchAll());
-
+/*
+** Visualizzo l'errore del campo di ricerca se non ho
+** trovato nessuna applicazione esistente con il nome
+** scritto nel campo (file apps.php)
+*/
 if(isset($_GET['error']) && $_GET['error'] == 1)
 {
-  $smarty->assign('insertError', 'Nessuna applicazione trovata');
+  $smarty->assign('insertError', 'No applications found');
 }
-//va sempre alla fine
+
 $smarty->display('smarty/application/templates/main_content/index.tpl');

@@ -95,7 +95,7 @@
 				<img class="circle user-img responsive-img" alt="" src="images/gianluca.jpg">
 			</div>
 			<div class="col s12 m8 right-side">
-				<h5 class="indigo-text">Valentina Di Cristofaro</h5>
+				<h5 class="indigo-text">Gianluca Scoccia</h5>
 				<p class="light">Univaq - Gssi</p>
 					<div class="block">
 						<h5 class="left-align"><i class="mdi-action-account-box"></i>About me</h5>

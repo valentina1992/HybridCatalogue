@@ -1,5 +1,13 @@
 {extends file="smarty/application/templates/base.tpl"}
 {block name=contenuto}
+
+<!--
+    Dato che nel file submit.php è stata scritta la funzione
+    $mandatoryFields che serve a controllare se i campi sono scritti
+    oppure no, questa funzione javascript mi permette di premere il bottone
+    fetchFromStore anche senza aver inserito quei campi necessari,
+    disabiliteremo per un secondo quel controllo $mandatoryFields
+-->
 <script>
    function disabledRequired()
    {
@@ -11,6 +19,10 @@
    }
 
 </script>
+
+<!--
+  Se l'id non è valido mi manderà un messaggio di errore
+-->
 <div class="container">
    <div class="row">
       {if isset($insertError)}
@@ -22,6 +34,7 @@
       </div>
       {/if}
    </div>
+
    <div class="row">
       <form class="col s12 m12" name="form1" class="form-horizontal" action="submit.php" method="POST">
          <div class="row">
@@ -33,6 +46,9 @@
             </div>
             <div class="input-field col s12">
                <center>
+                   <!--
+                     Qui è scritta la funzione di javascript onClick
+                   -->
                   <button type="submit" onclick="disabledRequired();" class="waves-effect waves-light btn" name="fetchFromStore" value="1">
                   Fetch From Store</button>
                </center>
@@ -218,6 +234,9 @@
          </div>
 
          <center>
+             <!--
+               Inserisce l'app nel database
+             -->
             <button type="submit" name="insert" value="1" class="waves-effect waves-light btn">
             Insert to App</button>
          </center>

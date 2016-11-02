@@ -33,6 +33,14 @@
               <h4 class="tit_home">
                 <a href="app_details.php?id={$application['idApp']}">{$application['name']}</a>
               </h4>
+
+              <!-- Questo controllo inizia qui
+                   Serve per far vedere all'utente o sviluppatore
+                   l'immagine in cui è supportata l'applicazione
+                   se iosURL, o windowsURL sono stati inseriti nei
+                   campi di inserimento allora appare l'immagine
+                   altrimenti no
+              -->
               <div class="icon">
                 {if $application['androidUrl'] != ''}
                 <a href="{$application['androidUrl']}" target="_blank"><img src="images/android.png"></a>

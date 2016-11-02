@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-10-10 23:14:38
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-11-02 16:13:42
          compiled from "smarty/application/templates/main_content/index.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17168433757ef7e4289d257-46137914%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dbc1081f1d4f1750edb75a0deca39c6d107c58b2' => 
     array (
       0 => 'smarty/application/templates/main_content/index.tpl',
-      1 => 1475329365,
+      1 => 1478097207,
       2 => 'file',
     ),
     '401f360fb2eb1f6b55783b21966b5b7bf23bdebf' => 
     array (
       0 => 'smarty/application/templates/base.tpl',
-      1 => 1476134062,
+      1 => 1478099619,
       2 => 'file',
     ),
   ),
@@ -44,7 +44,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <body>
   <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="index.php" class="brand-logo left">Logo</a>
+      <a id="logo-container" href="index.php" class="brand-logo left">
+          <a href="images/logo.jpg"><img src="images/logo.jpg" style="width: 114px; &quot;"></a> 
+      </a>
         <ul class="right hide-on-med-and-down">
           <li><a href="app.php">App</a></li>
           <li><a href="about.php">About Us</a></li>
@@ -62,9 +64,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-
-<!--onload='document.form1.ValidateEmail.focus()'-->
-
 
 
 
@@ -97,70 +96,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   </div>
 </div>
 
-<!--start APP StaffPick-->
+<!--
+  Qui visualizzo tutte le info della tabella App
+  presenti nel database con il file index.php
+-->
 <div class="container">
   <div class="row">
-    <!--<h4>StaffPick:<a href =""></h4>-->
-    <?php  $_smarty_tpl->tpl_vars['application'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['application']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['appPick']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['application']->key => $_smarty_tpl->tpl_vars['application']->value) {
-$_smarty_tpl->tpl_vars['application']->_loop = true;
-?>
-      <div class="col s12 m3">
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-            <a href="app_details.php?id=<?php echo $_smarty_tpl->tpl_vars['application']->value['idApp'];?>
-">
-              <img class="circle" src="<?php echo $_smarty_tpl->tpl_vars['application']->value['img'];?>
-">
-            </a>
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">
-              <h5 class="tit_home">
-                <a href="app_details.php?id=<?php echo $_smarty_tpl->tpl_vars['application']->value['idApp'];?>
-"><?php echo $_smarty_tpl->tpl_vars['application']->value['name'];?>
-</a>
-              </h5>
-              <div class="icon">
-                <?php if ($_smarty_tpl->tpl_vars['application']->value['androidUrl']!='') {?>
-                <a href="<?php echo $_smarty_tpl->tpl_vars['application']->value['androidUrl'];?>
-" target="_blank"><img src="images/android.png"></a>
-                <?php }?>
-
-                <?php if ($_smarty_tpl->tpl_vars['application']->value['iosUrl']!='') {?>
-                <a href="<?php echo $_smarty_tpl->tpl_vars['application']->value['iosUrl'];?>
-" target="_blank"><img src="images/apple.png"></a>
-                <?php }?>
-
-                <?php if ($_smarty_tpl->tpl_vars['application']->value['windowsUrl']!='') {?>
-                <a href="<?php echo $_smarty_tpl->tpl_vars['application']->value['windowsUrl'];?>
-" target="_blank"><img src="images/windows.png"></a>
-                <?php }?>
-              </div>
-              <div class="bloccoContenuti_home">
-                <h6><strong style="color: #FF0000">Category:</strong>
-                  <br><?php echo $_smarty_tpl->tpl_vars['application']->value['category'];?>
-</h6>
-                <h6><strong style="color: #FF0000">Added:</strong>
-                  <br><?php echo $_smarty_tpl->tpl_vars['application']->value['createdAt'];?>
-</h6>
-              </div>
-            </span>
-            <p class="buttonView"><a class="waves-effect waves-light btn" href="app_details.php?id=<?php echo $_smarty_tpl->tpl_vars['application']->value['idApp'];?>
-">View</a></p>
-          </div>
-        </div>
-      </div>
-    <?php } ?>
-  </div>
-</div>
-<!--end APP-->
-
-<!--start APP StaffPick-->
-<div class="container">
-  <div class="row">
-    <!--<h4>Ultime APP:<a href =""></h4>-->
     <?php  $_smarty_tpl->tpl_vars['application'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['application']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['app']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['application']->key => $_smarty_tpl->tpl_vars['application']->value) {
@@ -183,6 +124,14 @@ $_smarty_tpl->tpl_vars['application']->_loop = true;
 </a>
               </h5>
               <div class="icon">
+
+                <!-- Questo controllo inizia qui
+                     Serve per far vedere all'utente o sviluppatore
+                     l'immagine in cui è supportata l'applicazione
+                     se iosURL, o windowsURL sono stati inseriti nei
+                     campi di inserimento allora appare l'immagine
+                     altrimenti no
+                -->
                 <?php if ($_smarty_tpl->tpl_vars['application']->value['androidUrl']!='') {?>
                 <a href="<?php echo $_smarty_tpl->tpl_vars['application']->value['androidUrl'];?>
 " target="_blank"><img src="images/android.png"></a>
@@ -197,7 +146,6 @@ $_smarty_tpl->tpl_vars['application']->_loop = true;
                 <a href="<?php echo $_smarty_tpl->tpl_vars['application']->value['windowsUrl'];?>
 " target="_blank"><img src="images/windows.png"></a>
                 <?php }?>
-                <!--<a href=""><img src="images/windows.png"></a>-->
               </div>
               <div class="bloccoContenuti_home">
                 <h6><strong style="color: #FF0000">Category:</strong>
@@ -216,7 +164,6 @@ $_smarty_tpl->tpl_vars['application']->_loop = true;
     <?php } ?>
   </div>
 </div>
-<!--end APP-->
 
 
 
@@ -232,8 +179,6 @@ $_smarty_tpl->tpl_vars['application']->_loop = true;
 <?php echo '<script'; ?>
  src="https://code.jquery.com/jquery-2.1.1.min.js"><?php echo '</script'; ?>
 >
-
-
 <?php echo '<script'; ?>
  type="text/javascript" src="materialize/js/materialize.js"><?php echo '</script'; ?>
 >
